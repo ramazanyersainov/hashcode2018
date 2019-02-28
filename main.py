@@ -1,4 +1,5 @@
 def readInput():
+    pass
     #new readInput
 
 if __name__ == "__main__":
