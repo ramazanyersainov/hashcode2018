@@ -1,8 +1,10 @@
 class photo:
-    def __init__(self, i, or, tags):
+    def __init__(self, i, orien, tags):
         self.index = i
         self.tags = set(tags)
-        self.or = or
+        self.orien = orien
+    def __repr__(self):
+        return "index = {}\t orien = {}\t tags = {}\n".format(self.index,self.orien,self.tags)
 
 class slide:
     def __init__(self, p_list):
@@ -14,6 +16,7 @@ class slide:
                 print("not two verticals for slide")
                 return
         self.tags = set()
+        self.p_i_list=[]
 
         for p in p_list:
             self.tags |= p.tags
@@ -21,12 +24,24 @@ class slide:
 
 
 def score(sl):
-    if sl.index == N
-    set1 = set(sl.tags)
-    set2 = set(sl_list[sl.index + 1].tags)
+    if sl.index == N:
+        set1 = set(sl.tags)
+        set2 = set(sl_list[sl.index + 1].tags)
 
 if __name__ == "__main__":
-    pass
-    #Comment
+
     photo_list = []
-    file = open("")
+    file_input = open("a_example.txt")
+
+    N = file_input.readline()
+    N = int(N)
+
+    for i in range(0,N):
+        temp_list = [x for x in file_input.readline().split(" ")]
+        temp_list[len(temp_list)-1] =  temp_list[len(temp_list)-1][:-1]
+        photo_list.append(photo(i,temp_list[0],temp_list[2:]))
+
+    print(photo_list)
+    #for i in range(0,N):
+
+
