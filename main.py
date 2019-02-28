@@ -30,7 +30,7 @@ def score(sl):
 
 
 if __name__ == "__main__":
-    p1 = photo(0, 'H', ['3', '3'])
+    p1 = photo(0, 'H', ['1', '3'])
     p2 = photo(1, 'V', ['3', '3'])
     s1 = slide([p1])
     s2 = slide([p2])
