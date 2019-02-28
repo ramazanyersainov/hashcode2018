@@ -77,7 +77,7 @@ def make_sl_list(p_list):
 if __name__ == "__main__":
 
     photo_list = []
-    file_input = open("c_memorable_moments.txt","r")
+    file_input = open("d_pet_pictures.txt","r")
 
     N = file_input.readline()
     N = int(N)
@@ -87,11 +87,7 @@ if __name__ == "__main__":
         temp_list = [x for x in file_input.readline().split(" ")]
         temp_list[len(temp_list)-1] =  temp_list[len(temp_list)-1][:-1]
         photo_list.append(photo(i,temp_list[0],temp_list[2:]))
-        for tag in photo_list[i].tags:
-            if tag not in tag_dict:
-                tag_dict[tag] = [i]
-            else:
-                tag_dict[tag].append(i)
+
 
     file_input.close()
     #print(photo_list)
@@ -99,34 +95,63 @@ if __name__ == "__main__":
     #print(tag_dict)
 
     sl_list = make_sl_list(photo_list)
-    print(sl_list)
+    #print(sl_list)
 
+    for i in range(len(sl_list)):
+        for tag in sl_list[i].tags:
+            if tag not in tag_dict:
+                tag_dict[tag] = [i]
+            else:
+                tag_dict[tag].append(i)
+
+    print(tag_dict)
     output_sl = []
 
-    '''
+
     for i in range(0, len(sl_list)):
-        if sl_list[i].occup:
+        if sl_list[i].occup == 1:
             continue
 
+        index_dict = {}
         for tag in sl_list[i].tags:
-            index_dict = {}
+
             for index in tag_dict[tag]:
+                if sl_list[index].occup:
+                    continue
                 if index not in index_dict:
                     index_dict[index]=1
                 else:
                     index_dict[index]+=1
 
-            max = 0
-            for index in index_dict:
-                if max < index_dict[index]:
-                    max = index
+       # print(index_dict)
+
+        for index in index_dict:
+            try:
+                if sl_list[index].occup == 1:
+                    index_dict.popitem(index)
+                    print("Llolepfkaw")
+            except:
+                pass
+
+        max = list(index_dict.keys())[0]
+
+        max_val = 0
+        for index in index_dict:
+            if max_val <= index_dict[index] and max != index:
+                if sl_list[max].occup == 1:
+                    continue
+                max = index
 
             #print("\n{}\n".format(max))
+        if i == max:
+            continue
 
         sl_list[i].occup = 1
+
         sl_list[max].occup = 1
 
         output_sl.append(sl_list[i])
+
         output_sl.append(sl_list[max])
 
     output_file = open("output.txt","w")
@@ -141,7 +166,7 @@ if __name__ == "__main__":
         output_file.write("\n")
 
     output_file.close()
-    '''
+
 
 
 
