@@ -14,8 +14,9 @@ class slide:
                 print("not two verticals for slide")
                 return
         self.tags = set()
-
+        self.p_i_list = []
         for p in p_list:
+            self.p_i_list.append(p.index)
             self.tags |= p.tags
 
 
