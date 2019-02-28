@@ -30,9 +30,12 @@ class slide:
 
 def score(sl):
 
-    if sl.index == N:
-        set1 = set(sl.tags)
-        set2 = set(sl_list[sl.index + 1].tags)
+    if sl.index == len(sl_list):
+        return 0
+
+    set1 = set(sl.tags)
+    set2 = set(sl_list[sl.index + 1].tags)
+    return min(len(set1 & set2), len(set1 - set2), len(set2 - set1))
 
 if __name__ == "__main__":
 
@@ -49,5 +52,3 @@ if __name__ == "__main__":
 
     print(photo_list)
     #for i in range(0,N):
-
-
