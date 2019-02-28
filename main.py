@@ -14,19 +14,18 @@ class slide:
             print("wrong number of photos for slide")
             return
         if len(p_list) == 2:
-            if  not (p_list[0] == 'V' and p_list[1] == 'V'):
+            if p_list[1].orien != 'V' or p_list[1].orien != 'V':
                 print("not two verticals for slide")
                 return
         self.tags = set()
-
+        self.occup = 0
         self.p_i_list=[]
-
-
         for p in p_list:
             self.p_i_list.append(p.index)
             self.tags |= p.tags
 
-
+    def __repr__(self):
+        return '{}'.format(self.tags)
 
 def score(sl):
 
@@ -37,18 +36,35 @@ def score(sl):
     set2 = set(sl_list[sl.index + 1].tags)
     return min(len(set1 & set2), len(set1 - set2), len(set2 - set1))
 
+def make_sl_list(p_list):
+    res = []
+    p_V_list = []
+    for p in p_list:
+        if p.orien == 'H':
+            res.append(slide([p]))
+        else:
+            p_V_list.append(p)
+    p_taken = [False for i in range(len(p_V_list))]
+    for i in range(len(p_V_list)):
+        max = 0
+        if p_taken[i]:
+            continue
+        p_max = i
+        for j in range(len(p_V_list)):
+            if (i != j and p_taken[i] == False and p_taken[j] == False):
+                if (len(p_V_list[i].tags | p_V_list[j].tags) >= max):
+                    max = len(p_V_list[i].tags | p_V_list[j].tags)
+                    p_max = j
+        res.append(slide([p_V_list[i], p_V_list[p_max]]))
+        p_taken[i] = True
+        p_taken[p_max] = True
+
+    return res
+
 if __name__ == "__main__":
 
-    photo_list = []
-    file_input = open("a_example.txt")
+    p_list = [photo(i, 'V', [j for j in range(i)]) for i in range(10)]
 
-    N = file_input.readline()
-    N = int(N)
+    sl_list = make_sl_list(p_list)
 
-    for i in range(0,N):
-        temp_list = [x for x in file_input.readline().split(" ")]
-        temp_list[len(temp_list)-1] =  temp_list[len(temp_list)-1][:-1]
-        photo_list.append(photo(i,temp_list[0],temp_list[2:]))
-
-    print(photo_list)
-    #for i in range(0,N):
+    print(sl_list)
