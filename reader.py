@@ -31,18 +31,23 @@ def score(sl):
 if __name__ == "__main__":
 
     photo_list = []
-    file_input = open("a_example.txt")
+    file_input = open("c_memorable_moments.txt")
 
     N = file_input.readline()
     N = int(N)
+    tag_dict = {}
 
     for i in range(0,N):
         temp_list = [x for x in file_input.readline().split(" ")]
         temp_list[len(temp_list)-1] =  temp_list[len(temp_list)-1][:-1]
         photo_list.append(photo(i,temp_list[0],temp_list[2:]))
-
+        for tag in photo_list[i].tags:
+            if tag not in tag_dict:
+                tag_dict[tag] = [i]
+            else:
+                tag_dict[tag].append(i)
     print(photo_list)
 
-    #for i in range(0,N):
+    print(tag_dict)
 
 
